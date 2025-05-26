@@ -1,3 +1,8 @@
+using CodePulse.API.Data;
+using CodePulse.API.Repositries.Implementation;
+using CodePulse.API.Repositries.Interface;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("MSCONN")));
+
+builder.Services.AddScoped<ICatrgoryRepository,CategoryRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
